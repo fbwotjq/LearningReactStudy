@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>순수 리엑트 예제</title>
+</head>
+<body>
+<div id="react-container">
+
+</div>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script>
+    // 순수 리엑트와 자바스크립트 코드
+    var dish = React.createElement("h1", {id: "recipe-0", 'data-type': "title"}, "구운연어")
+
+    // 제목 엘리먼트를 로그로 출력해 본다. ==> 아직까진 DOM이 아니다.
+    console.log(dish)
+
+    // ReactDom으로 실제 브라우져에 렌더링 한다. 결국 react 자체는 컴포넌트의 인터페이스인듯 하다.
+    ReactDOM.render(dish, document.getElementById('react-container'))
+</script>
+</body>
+</html>

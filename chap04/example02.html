@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>순수 리엑트 예제</title>
+</head>
+<body>
+<div id="react-container">
+
+</div>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script>
+    // 리엑트는 props.children을 통해서 여러개 의 자식들을 렌더링 할수 있다.
+    // React.createElement("h1", null, "구운연어") ==> 해당 케이스의 경우 한개의 텍스트 자식만 렌더링이 될 예정이다.
+    // 여러개의 자식을 그려보자.
+    // 그리고 속성에 class라는 키워드는 예약어라서 쓸수 없는듯 하다. 그래서 'className'으로 변경해서 렌더링 시도를 해보니 정상적으로 잘 나온다.
+    const list = React.createElement("ul", {className: 'ingredients'},
+        React.createElement("li", null, "김치"),
+        React.createElement("li", null, "깍두기"),
+        React.createElement("li", null, "김"),
+        React.createElement("li", null, "오징어 젓갈")
+    )
+
+    // props라는 속성에 children이라는 속성에 자식들이 보인다.
+    console.log(list)
+
+    // 그리고 역시 화면에 그려보자.
+    ReactDOM.render(list, document.getElementById("react-container"))
+
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>createClass 예제</title>
+</head>
+<body>
+<div id="react-container">
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/15.6.2/react-dom.js"></script>
+<script>
+
+    /**
+     * 리엑트 진보의 흐름
+     * createClass ->
+     * createClass + es6 closure ->
+     * createClass + es6 closure + 내부함수 이용 ->
+     * es6 class + React.Component추상 클래스 사용 ->
+     * 함수형 컴포넌트
+     */
+
+    /*
+    const IngredientsList = React.createClass({
+        displayName: "IngredientsList",
+        render() {
+            return React.createElement("ul", {"className": "ingredients"},
+                React.createElement("li", null, "연어 500그램"),
+                React.createElement("li", null, "잣 1컵"),
+                React.createElement("li", null, "버터 상추 2컵"),
+                React.createElement("li", null, "옐로 스퀘시 1개"),
+                React.createElement("li", null, "올리브오일 1/2컵"),
+                React.createElement("li", null, "마늘 3쪽")
+            )
+        }
+    })
+    */
+
+    /*
+    const IngredientsList = React.createClass({
+        displayName: "IngredientsList",
+        render() {
+            return React.createElement("ul", {"className": "ingredients"},
+                this.props.items.map((ingredient, i) => React.createElement("li", {key:i}, ingredient))
+            )
+        }
+    })
+    */
+
+    /*
+    const IngredientsList = React.createClass({
+        displayName: "IngredientsList",
+        renderListItem(ingredient, i) {
+            return React.createElement("li", {key: i}, ingredient)
+        },
+        render() {
+            return React.createElement("ul", {"className": "ingredients"},
+                this.props.items.map(this.renderListItem)
+            )
+        }
+    })
+    */
+
+    /*
+    class IngredientsList extends React.Component {
+
+        renderListItem(ingredient, i) {
+            return React.createElement("li", {key: i}, ingredient)
+        }
+
+        render() {
+            return React.createElement("ul", {"className": "ingredients"},
+                this.props.items.map(this.renderListItem)
+            )
+        }
+
+    }
+    */
+
+
+
+    const items = [
+        "연어 500그램",
+        "잣 1컵",
+        "버터 상추 2컵",
+        "옐로 스퀘시 1개",
+        "올리브오일 1/2컵",
+        "마늘 3쪽"
+    ]
+
+    const list = React.createElement(IngredientsList, {items}, null)
+
+    ReactDOM.render(list, document.getElementById('react-container'));
+
+</script>
+</body>
+</html>
