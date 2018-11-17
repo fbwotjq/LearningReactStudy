@@ -1,4 +1,5 @@
-var webpack = require("webpack");
+let webpack = require("webpack");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: __dirname + "/src/index.js",
@@ -22,10 +23,8 @@ module.exports = {
     },
     mode: 'none',
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            warnings: false,
-            mangle: true
+        new UglifyJsPlugin({
+            sourceMap: true
         })
     ]
 }
