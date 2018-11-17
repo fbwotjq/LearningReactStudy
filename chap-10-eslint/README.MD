@@ -1,0 +1,5 @@
+- console> sudo npm install -g eslint
+- console> npm init
+- console> eslint --init
+- console> npm i eslint@latest eslint-plugin-react@latest --save-dev
+- console> eslint sample.js
