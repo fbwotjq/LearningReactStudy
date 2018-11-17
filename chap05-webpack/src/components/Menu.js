@@ -1,5 +1,6 @@
 import React from 'react'
 import Recipe from './Recipe'
+import '../stylesheets/Menu.css'
 
 const Menu = ({recipes, title}) => (
     <article>

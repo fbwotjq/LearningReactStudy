@@ -11,4 +11,8 @@
  * webpack.config.js 파일 생성
  * chap05/example04.html코드를 webpack으로 전환 시작
     - Menu 컴포넌트 화
-    
+ * webpack을 통한 번들링
+    - console> webpack --> dist/assets/bundle.js 파일 생성
+ * css 번들링 포함
+    - console> npm install style-loader css-loader postcss-loader autoprefixer --save-dev
+    - webpack.config.js 추가
