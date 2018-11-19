@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="react-container1"></div>
+<div id="react-container2"></div>
+<div id="react-container3"></div>
+<div id="react-container4"></div>
+<div id="react-container5"></div>
+<script src="https://unpkg.com/prop-types/prop-types.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/15.6.2/react-dom.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+<script type="text/babel">
+
+    const Summary = React.createClass({
+        display: "Summary",
+        /*
+        propTypes: {
+            ingredients: PropTypes.array.isRequired,
+            steps: PropTypes.array.isRequired,
+            title: PropTypes.string
+        },
+        */
+        propTypes: {
+            ingredients: PropTypes.number.isRequired,
+            steps: PropTypes.number.isRequired,
+            //title: PropTypes.string
+            title: (props, propNmae) => (typeof props[propNmae] !== 'string') ? new Error("제목은(title)은 문자열이어야 합니다.") :
+                (props[propNmae].length > 20) ? new Error("제목은 20자 이네야 합니다.") : null
+        },
+        getDefaultProps() {
+            return {
+                ingredients: 0,
+                steps: 0,
+                title: "[무제]"
+            }
+        },
+        render() {
+            const {
+                ingredients,
+                steps,
+                title
+            } = this.props
+            return (
+                <div className="summary">
+                    <h1>{title}</h1>
+                    <p>
+                        {/*
+                        <span>재료 {ingredients.length} 종류 | </span>
+                        <span>총 {steps.length} 단계 </span>
+                        */}
+                        <span>재료 {ingredients} <br/>종류 | </span>
+                        <span>총 {steps} 단계 </span>
+                    </p>
+                </div>
+            )
+        }
+    })
+
+    class SummaryClassStyle extends React.Component {
+
+        static propTypes = {
+            ingredients: PropTypes.number.isRequired,
+            steps: PropTypes.number.isRequired,
+            //title: PropTypes.string
+            title: (props, propNmae) => (typeof props[propNmae] !== 'string') ? new Error("제목은(title)은 문자열이어야 합니다.") :
+                (props[propNmae].length > 20) ? new Error("제목은 20자 이네야 합니다.") : null
+        }
+
+        static defaultProps = {
+            ingredients: 0,
+            steps: 0,
+            title: "[무제]"
+        }
+
+        render() {
+            const {
+                ingredients,
+                steps,
+                title
+            } = this.props
+            return (
+                <div className="summary">
+                    <h1>{title}</h1>
+                    <p>
+                        <span>재료 {ingredients} 종류 </span>
+                        <span>총 {steps} 단계 </span>
+                    </p>
+                </div>
+            )
+        }
+    }
+
+    const SummaryFunctionalStyle = ({ingredients=0, steps=0, title="[무제]"}) => {
+        return (
+            <div className="summary">
+                <h1>{title}</h1>
+                <p>
+                    <span>재료 {ingredients} 종류 </span>
+                    <span>총 {steps} 단계 </span>
+                </p>
+            </div>
+        )
+    }
+    SummaryFunctionalStyle.propTypes = {
+        ingredients: PropTypes.number.isRequired,
+        steps: PropTypes.number.isRequired,
+        //title: PropTypes.string
+        title: (props, propNmae) => (typeof props[propNmae] !== 'string') ? new Error("제목은(title)은 문자열이어야 합니다.") :
+            (props[propNmae].length > 20) ? new Error("제목은 20자 이네야 합니다.") : null
+    }
+
+    ReactDOM.render(<Summary title="Peanut Butter and Jelly_my Sweet Cotton Candy <3"
+                             ingredients="peanut butter, jelly, bread and love"
+                             steps="spread peanut butter and jelly between breads with much much much love" />,
+        document.getElementById('react-container1'))
+
+    ReactDOM.render(<Summary />,
+        document.getElementById('react-container2'))
+
+    ReactDOM.render(<Summary title="1234567891012345678910" ingredients="3" steps="1"/>,
+        document.getElementById('react-container3'))
+
+    ReactDOM.render(<SummaryClassStyle title="1234567891012345678910" ingredients={3} steps={1}/>,
+        document.getElementById('react-container4'))
+
+    ReactDOM.render(<SummaryFunctionalStyle title="1234567891012345678910" ingredients={3} steps={1}/>,
+        document.getElementById('react-container5'))
+
+</script>
+</body>
+</html>
