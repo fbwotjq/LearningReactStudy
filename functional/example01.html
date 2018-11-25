@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lodash 예제</title>
+</head>
+<body>
+<script>
+    const data = [
+        { name : 'jaco.ryu1', age: 20 },
+        { name : 'jaco.ryu2', age: 21 },
+        { name : 'jaco.ryu3', age: 22 },
+        { name : 'jaco.ryu4', age: 23 },
+        { name : 'jaco.ryu5', age: 24 },
+        { name : 'jaco.ryu6', age: 25 },
+        { name : 'jaco.ryu7', age: 26 },
+        { name : 'jaco.ryu8', age: 27 }
+    ]
+
+    data.reduce((acc, i) => {
+        console.log(acc , i)
+        return acc.concat({nameTemp: i.name, ageTemp: i.age})
+    }, [])
+</script>
+</body>
+</html>

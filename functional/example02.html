@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lodash 예제</title>
+</head>
+<body>
+<div id="react-container">
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+<script>
+    const data = [
+        { name : 'jaco.ryu1', age: 20 },
+        { name : 'jaco.ryu2', age: 21 },
+        { name : 'jaco.ryu3', age: 22 },
+        { name : 'jaco.ryu4', age: 23 },
+        { name : 'jaco.ryu5', age: 24 },
+        { name : 'jaco.ryu6', age: 25 },
+        { name : 'jaco.ryu7', age: 26 },
+        { name : 'jaco.ryu8', age: 27 }
+    ]
+
+    const flatMapData = _.flatMap(data, (i, j, k) => {
+        console.log("i ==>", i)
+        console.log("j ==>", j)
+        console.log("k ==>", k)
+        return i
+    });
+    console.log(flatMapData)
+
+    const data1 = [
+        [{ name : 'jaco.ryu1', age: 20 }, { name : 'jaco.ryu1', age: 21 }],
+        [{ name : 'jaco.ryu2', age: 21 }],
+        [{ name : 'jaco.ryu3', age: 22 }],
+        [{ name : 'jaco.ryu4', age: 23 }],
+        [{ name : 'jaco.ryu5', age: 24 }],
+        [{ name : 'jaco.ryu6', age: 25 }],
+        [{ name : 'jaco.ryu7', age: 26 }],
+        [{ name : 'jaco.ryu8', age: 27 }]
+    ]
+
+    const flatMapData1 = _.flatMap(data1, (i, j, k) => {
+        console.log("i ==>", i)
+        console.log("j ==>", j)
+        console.log("k ==>", k)
+        return i
+    });
+    console.log(flatMapData1)
+
+</script>
+</body>
+</html>
