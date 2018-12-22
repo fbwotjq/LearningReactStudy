@@ -4,7 +4,6 @@ import { Provider } from 'mobx-react';
 import './index.css';
 import App from './App';
 import CounterStore from './stores/counter';
-import registerServiceWorker from './registerServiceWorker';
 
 const counter = new CounterStore();
 
@@ -15,5 +14,3 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 );
-
-registerServiceWorker();
