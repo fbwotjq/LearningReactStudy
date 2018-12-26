@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 // **** 최하단에 잇던 observer 가 이렇게 위로 올라옵니다.
 @observer
 class Counter extends Component {
+
   @observable number = 0;
 
   @action
