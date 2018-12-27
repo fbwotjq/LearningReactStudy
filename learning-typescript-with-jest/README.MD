@@ -1,0 +1,6 @@
+  - step1:  mkdir learning-typescript-with-jest && cd $_
+  - step2:  npm init -y
+  - step3:  npm i -D typescript jest @types/jest @types/qs 
+  - step4:  npm i -D ts-jest
+  - step5:  npm test
+  - step6:  npm test -- --watch
