@@ -6,6 +6,10 @@ describe('queryString', () => {
 
     test('array test', () => {
         expect(queryString({sort: ["a","b"]})).toBe("sort=a&sort=b")
+        expect(queryString({sort: ["a"]})).toBe("sort=a")
+        expect(queryString({ a: [] })).toBe(EMPTY_STRING)
+        expect(queryString({ a: [1,2] })).toBe("a=1,2")
+        expect(queryString({ sort: "abc" })).toBe("sort=abc")
     })
 
     test('null test', () => {
@@ -24,9 +28,6 @@ describe('queryString', () => {
         expect(queryString({sort: "  "})).toBe(EMPTY_STRING)
     })
 
-    test('[] test', () => {
-        expect(queryString({ a: [] })).toBe(EMPTY_STRING)
-    })
 
     test('queryString 만들기가 잘 만들어지는지 확인', () => {
         const actualValue = { A: 'a', B: 'b', C: 'abc' };
