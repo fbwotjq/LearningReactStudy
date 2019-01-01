@@ -107,15 +107,19 @@
         }
     }
 
+    // 디스패처의 인터페이스를 실행시키도록 액션으로 감싸고 실제 조작은 디스패쳐의 이벤트를 감지하는 스토어에서 동작한다.
+    // 결국 액션을 통해 디스패처를 동작시키고 스토어가 디스패쳐의 이벤트를 감지해 동작 시킨후 컴포넌트를 다시그린다.
     const appDispatcher = new CountdownDispatcher()
     const actions = countdownActions(appDispatcher)
     const store = new CountdownStore(10, appDispatcher)
 
+    // 돔을 그린다.
     const render = count => ReactDOM.render(
         <Countdown count={count} {...actions} />,
         document.getElementById('react-container')
     )
 
+    // 해당 이벤트 발생시 다시 그리겠다는 것
     store.on("TICK", () => render(store.count))
     store.on("RESET", () => render(store.count))
 
