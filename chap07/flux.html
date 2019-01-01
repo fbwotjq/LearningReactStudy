@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style media="screen">
+        @import url(https://fonts.googleapis.com/css?family=Knewave);
+        html, body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #react-container {
+            height: calc(100% - 2.5em);
+            margin: 1em;
+            border: 0.25em double orange;
+            color: blue;
+            border-radius: 0.5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Knewave", fantasy, Arial;
+            font-size: 5em;
+        }
+        #react-container div span {
+            display: block;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.5em;
+        }
+        #react-container div span:last-child {
+            color: grey;
+            font-size: 0.5em;
+        }
+    </style>
+</head>
+<body>
+<div id="react-container"></div>
+<script src="https://unpkg.com/prop-types/prop-types.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/15.6.2/react-dom.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flux/2.1.1/Flux.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.0.0/EventEmitter.min.js"></script>
+<script type="text/babel">
+
+    const { Component } = React
+    const { Dispatcher } = Flux
+
+    const Countdown = ({count, tick, reset}) => {
+        if (count) {
+            setTimeout(() => tick(count), 1000)
+        }
+        return (count) ?
+                <h1>{count}</h1> :
+                <div onClick={() => reset(10)}>
+                    <span>CELEBRATE!!!</span>
+                    <span>(click to start over)</span>
+                </div>
+    }
+
+    const countdownActions = dispatcher =>
+        ({
+            tick(count) {
+                dispatcher.handleAction({type: 'TICK', count: count - 1})
+            },
+            reset(count) {
+                dispatcher.handleAction({type: 'RESET', count})
+            }
+        })
+
+    class CountdownDispatcher extends Dispatcher {
+        handleAction(action) {
+            console.log('dispatching action: ', action)
+            this.dispatch({
+                source: 'VIEW_ACTION',
+                action
+            })
+        }
+    }
+
+    class CountdownStore extends EventEmitter {
+
+        constructor(count = 5, dispatcher) {
+            super()
+            this._count = count
+            this.dispatcherIndex = dispatcher.register(this.dispatch.bind(this))
+        }
+
+        get count() {
+            return this._count
+        }
+
+        dispatch(payload) {
+            const { type, count } = payload.action
+            switch (type) {
+                case "TICK":
+                    this._count = this._count - 1
+                    this.emit("TICK", this._count)
+                    return true
+                case "RESET":
+                    this._count = count
+                    this.emit("RESET", this._count)
+                    return true
+            }
+        }
+    }
+
+    const appDispatcher = new CountdownDispatcher()
+    const actions = countdownActions(appDispatcher)
+    const store = new CountdownStore(10, appDispatcher)
+
+    const render = count => ReactDOM.render(
+        <Countdown count={count} {...actions} />,
+        document.getElementById('react-container')
+    )
+
+    store.on("TICK", () => render(store.count))
+    store.on("RESET", () => render(store.count))
+
+    render(store.count)
+</script>
+</body>
+</html>
