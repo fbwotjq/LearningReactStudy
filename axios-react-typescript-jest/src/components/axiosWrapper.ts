@@ -15,14 +15,7 @@ export function createAxiosInstance(): AxiosInstance {
     instance.interceptors.response.use((response :any) => {
         //console.log("success ===========================")
         //console.log(response)
-        if(!response.headers['content-type'] || response.headers['content-type'].trim() !== 'application/json;charset=utf-8') {
-            return Promise.reject({
-                status: response.status,
-                data: response.data
-            })
-        } else {
-            return response
-        }
+        return response
 
     }, (error: any) => {
         //console.log("error ===========================")
@@ -32,13 +25,19 @@ export function createAxiosInstance(): AxiosInstance {
         if (error.response) {
 
             const {
-                status, data
+                status, data, headers
             } = error.response
 
             const isChekcAbleHttpStatusCode: boolean = TEST_HTTP_STATUS_CODE.UNAUTHENTICATED === Number(status)
             const isValidPayload: boolean = data && data.status && data.message
+            const isContentTypewhen4xx: boolean = isChekcAbleHttpStatusCode && (!headers['content-type'] || headers['content-type'].trim() !== 'application/json;charset=utf-8')
 
-            if(status && isChekcAbleHttpStatusCode && isValidPayload) {
+            if(isContentTypewhen4xx) {
+                return Promise.reject({
+                    status,
+                    data
+                })
+            } else if(status && isChekcAbleHttpStatusCode && isValidPayload) {
                 return Promise.resolve({
                     status,
                     data

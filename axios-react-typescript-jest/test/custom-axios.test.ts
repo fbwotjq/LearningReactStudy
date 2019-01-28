@@ -137,18 +137,18 @@ describe('Custom Axios', () => {
 
     })
 
-   test('HTTP 200 + JSON_PAYLOAD + INVALID HEADER', (done) => {
+   test('HTTP 4xx + JSON_PAYLOAD + INVALID HEADER', (done) => {
 
         const payload = {
-            status: TEST_HTTP_STATUS_CODE.OK,
-            message: TEST_HTTP_STATUS_CODE[TEST_HTTP_STATUS_CODE.OK]
+            status: TEST_HTTP_STATUS_CODE.UNAUTHENTICATED,
+            message: TEST_HTTP_STATUS_CODE[TEST_HTTP_STATUS_CODE.UNAUTHENTICATED]
         }
-        const targetUrl = '/http_200'
+        const targetUrl = '/http_4xx'
 
         server = defineSpec((req: any, res: any) => {
             res.setHeader('Content-Type', 'text/html; charset=utf-8')
             if (url.parse(req.url).pathname === targetUrl) {
-                res.statusCode = TEST_HTTP_STATUS_CODE.OK
+                res.statusCode = TEST_HTTP_STATUS_CODE.UNAUTHENTICATED
                 res.end(JSON.stringify(payload))
             } else {
                 res.statusCode = TEST_HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR
