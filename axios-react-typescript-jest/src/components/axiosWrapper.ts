@@ -9,29 +9,39 @@ export function createAxiosInstance(): AxiosInstance {
 
     const instance = axios.create({
         baseURL: `https://localhost:${testServerPort}`,
-        timeout: 1000,
-        validateStatus: function (status) {
-            return status >= 100 && status < 410
-        }
+        timeout: 1000
     })
 
     instance.interceptors.response.use((response :any) => {
-        console.log("success ===========================")
+        //console.log("success ===========================")
         //console.log(response)
-        //console.dir(response)
-        return response
+        if(response.headers['content-type'] && response.headers['content-type'].trim() !== 'application/json;charset=utf-8') {
+            return Promise.reject({
+                status: response.status,
+                data: response.data
+            })
+        } else {
+            return response
+        }
+
     }, (error: any) => {
-        console.log("error ===========================")
+        //console.log("error ===========================")
+        //console.log(error)
+        //console.log("error.response ===========================")
+        //console.log(error.response)
         if (error.response) {
+
             const {
                 status, data
             } = error.response
 
-            if(status && TEST_HTTP_STATUS_CODE.UNAUTHENTICATED === Number(status)) {
-                console.log(error)
+            const isChekcAbleHttpStatusCode: boolean = TEST_HTTP_STATUS_CODE.UNAUTHENTICATED === Number(status)
+            const isValidPayload: boolean = data && data.status && data.message
+
+            if(status && isChekcAbleHttpStatusCode && isValidPayload) {
                 return Promise.resolve({
-                    status: TEST_HTTP_STATUS_CODE.UNAUTHENTICATED,
-                    data: 'success'
+                    status,
+                    data
                 })
             } else {
                 return Promise.reject(error)
@@ -39,9 +49,6 @@ export function createAxiosInstance(): AxiosInstance {
         } else {
             return Promise.reject(error)
         }
-        /*
-
-        console.dir(error)*/
 
     })
 
