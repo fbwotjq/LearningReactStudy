@@ -15,7 +15,7 @@ export function createAxiosInstance(): AxiosInstance {
     instance.interceptors.response.use((response :any) => {
         //console.log("success ===========================")
         //console.log(response)
-        if(response.headers['content-type'] && response.headers['content-type'].trim() !== 'application/json;charset=utf-8') {
+        if(!response.headers['content-type'] || response.headers['content-type'].trim() !== 'application/json;charset=utf-8') {
             return Promise.reject({
                 status: response.status,
                 data: response.data
